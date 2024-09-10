@@ -1,4 +1,4 @@
-public class Main {
+public class Exo1Scrabble {
     public static void main(String[] args) {
 
        // split the 1st line and the others line from output
@@ -15,7 +15,7 @@ public class Main {
         // print the line by line
         split_line(dataset);
 
-        
+
 
         // match with character in dataset
 
