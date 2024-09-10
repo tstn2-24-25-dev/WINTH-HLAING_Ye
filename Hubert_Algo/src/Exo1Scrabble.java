@@ -1,64 +1,102 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+
 
 public class Exo1Scrabble {
 
 
+    // read the 1st line of the text file
+    public static String readFile ( String file_location ) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file_location));
 
-    public static void main(String[] args) {
+        String first_line = reader.readLine();
 
-        // split the 1st line and the others line from output
-        String dataset = """
-                a 2 b 4 c 5 d 8 e 12 f 3 g 18
-                car 
-                var
-                yolo
-                ill
-                nice
-                international
-                """;
+        reader.close();
 
-    // initialize the alphabets and the points
-        HashMap<Character, Integer> alphabet ;
-        alphabet = new HashMap< Character , Integer>();
-        alphabet.put('a', 2);
-        alphabet.put('b', 4);
-        alphabet.put('c', 5);
-        alphabet.put('d', 8);
-        alphabet.put('e', 12);
-        alphabet.put('f', 3);
-        alphabet.put('g', 18);
-
-        // print the line by line
-        // split_line(dataset);
-
-        match_alphabet_sum("bear" , alphabet);
-
-        // match with character in dataset
-
-
-        //  total
-
-        // sort with point
+        return first_line;
     }
-    public static void split_line(String dataset) {
+    // take the list of word from the text file
+    public static ArrayList<String> wordList (String file_location ) throws  IOException {
+        ArrayList<String> word_list = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(file_location));
 
-        // split the line
-        String[] split = dataset.split( "\n" );
-        // the rest , will continue in array list
-        for ( String line : split){
-            System.out.println( line );
+        String line ;
+        boolean first_line = true ;
+
+        while ( ( line = reader.readLine()) != null ){
+            if ( first_line ){
+                first_line = false ;
+                continue;
+            }
+            word_list.add(line.trim());
         }
+        reader.close();
+        return word_list;
     }
 
-    public static  int match_alphabet_sum ( String word  , HashMap<Character , Integer> alphabet){
+    // calculate the score of the alphabet
+    public static int calculate_score ( String word , String file_location ) throws IOException {
+        HashMap<String , Integer > point = new HashMap<>();
+        String[] first_line = readFile(file_location).split(" ");
 
-        int sum = 0 ;
-
-        for ( int i = 0 ; i < word.length() ; i++ ){
-            sum += alphabet.get(word.charAt(i));
+        for ( int i = 0 ; i < first_line.length ; i += 2 ){
+            point.put( first_line[i] , Integer.parseInt( first_line[i+1]));
         }
 
-        return sum ;
+        int score = 0 ;
+
+        for ( char alphabet : word.toCharArray()){
+            String alphabet_string = String.valueOf(alphabet);
+            if ( point.containsKey(alphabet_string)){
+                score += point.get(alphabet_string);
+            }
+        }
+        return score;
+    }
+
+    // sorting from the maximum to minimum point
+    public static ArrayList<String> sorting (ArrayList<String> words , String file_location ) throws IOException {
+        words.sort( ( word1 , word2 ) -> {
+            try{
+                return Integer.compare( calculate_score( word2 , file_location ) ,
+                                        calculate_score( word1 , file_location));
+            }catch( IOException e){
+                e.printStackTrace();
+                return 0;
+            }
+        });
+        return words;
+    }
+
+
+    public static void main(String[] args) throws IOException {
+
+        String file_location="src/data.txt";
+
+        // output 1st line
+        String s = readFile(file_location);
+
+        System.out.println(s);
+
+        // store the word list in array List
+        ArrayList<String> word_list = wordList(file_location);
+
+        System.out.println(word_list);
+
+//        System.out.println(calculate_score("zebra" , file_location));
+//        System.out.println(calculate_score("bug" , file_location));
+//        System.out.println(calculate_score("button" , file_location));
+
+        // sort the word with point
+        ArrayList<String> sortingList = sorting( word_list , file_location );
+
+        for ( String word : sortingList ){
+            System.out.println(word);
+        }
     }
 }
 
