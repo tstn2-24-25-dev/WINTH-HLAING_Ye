@@ -19,7 +19,7 @@ public class Exo3BlockChain {
         // do a StringBuilder class to store the final result of character
         StringBuilder book = new StringBuilder();
 
-        // take each request with alphabet with request 
+        // take each request with alphabet with request
         for ( int i = 0 ; i < writing_request ; i++ ) {
             String[] request = input.nextLine().split(" ");
             String letter = request[0];
