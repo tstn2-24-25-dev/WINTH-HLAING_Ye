@@ -11,6 +11,7 @@ public class Exo5EconomieDePapier {
         int  maximum_line = 10 ; // the const number of maximum lines
 
         // take the number with space between the lines
+        System.out.println("Enter the number of page with space: ");
         String[] input = scanner.nextLine().split(" ");
 
         int[] image_height = new int[input.length];
@@ -42,6 +43,5 @@ public class Exo5EconomieDePapier {
         // return the number of page
         System.out.println("The total number of page " + page);
     }
-
 
 }
