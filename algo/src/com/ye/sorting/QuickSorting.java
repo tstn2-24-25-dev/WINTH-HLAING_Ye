@@ -1,9 +1,11 @@
 package com.ye.sorting;
 
+import java.util.Arrays;
+
 public class QuickSorting {
     public static void main(String[] args) {
 
-        int[] list = { 40 , 90 , 80 , 50 , 30 , 20 , 70 };
+        int[] list = {100, 0, 50, 60, 20, 30, 70};
 
         int n = list.length;
 
@@ -12,52 +14,48 @@ public class QuickSorting {
         System.out.print("\n==============================\n");
         System.out.print("Sorted List with Quick Sort: ");
         // quicksorting function
-        quickSort( list , 0 , n -1  );
+        quickSort(list, 0, n - 1);
         printList(list);
     }
-    // function swapping for pivote partition
-    public static void swapping ( int[] list , int i , int j ){
-        int temp = list[i];
-        list[i] = list[j] ;
-        list[j] = temp ;
+
+    public static void printList(int[] list){
+        for ( int i = 0; i < list.length; i++){
+            System.out.print(list[i] + " ");
+        }
     }
 
-    public static int partitionPivot ( int[] list , int low , int high ){
+    public static  void quickSort(int[] list, int start, int end){
+        if ( end <= start ){
+            return ;  // return to base
+        }
 
-        // make a pivot with last index
-        int pivot = list[high];
+        int pivot = partition(list , start , end );
 
-        int i = ( low - 1 ) ;
+        quickSort(list , start , pivot - 1 );
+        quickSort(list , pivot + 1 , end );
+    }
 
-        for ( int j = low ; j <= high; j++ ) {
-            if ( list[j] < pivot ) {
+    public static int partition (int[] list , int start ,int end ){
+
+        int pivot = list[end];
+        int i = start -1 ;
+
+        for (int j = start ; j <= end ; j++){
+            if ( list[j] < pivot ){
                 i++;
-                // for swapping
-                swapping ( list , i , j );
+
+                int temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
             }
         }
-        // for swapping
-        swapping ( list , i + 1 , high );
 
-        // the position of index of pivot
-        return (i + 1);
-    }
+        i++;
+        int temp = list[i];
+        list[i] = list[end];
+        list[end] = temp;
 
-    public static void quickSort ( int[] list , int low , int high ){
-
-        if ( low < high ) {
-            int pivot = partitionPivot (list , low , high);
-            // sort for left side
-            quickSort(list , low , pivot -1 );
-            // sort for right side
-            quickSort(list , pivot +1 , high);
-        }
-
-    }
-
-    public static void printList(int[] list) {
-        for ( int i : list ){
-            System.out.print(i + " ");
-        }
+        return i;
     }
 }
+

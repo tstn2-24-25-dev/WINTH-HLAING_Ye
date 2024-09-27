@@ -6,7 +6,7 @@ public class SelectionSorting {
 
     public static void main(String[] args) {
 
-        int[] list = { 78 , 3 , 8 , 1 , 10 , 2 };
+        int[] list = { 109 , 90 , 85 , 15 , 1000 , 3 };
 
         System.out.print("Unsorted List:");
         showinglist(list);
@@ -29,7 +29,7 @@ public class SelectionSorting {
                 if (list[j] < list[minindex])
                      minindex = j;
 
-            // sway the found minimum element with the first index
+            // swap  minimum element with the first index
 
             int temp = list[minindex];
             list[minindex] = list[i];

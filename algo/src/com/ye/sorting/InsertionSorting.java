@@ -4,7 +4,7 @@ public class InsertionSorting {
 
     public static void main(String[] args) {
 
-        int[] list = { 3 , 1  , 6 , 4 , 8 , 10 , 2 };
+        int[] list = { 1 , 3  , 4 , 6 , 2 , 8 , 11 };
 
         System.out.print("Unsorted List : " );
         showingList(list);
